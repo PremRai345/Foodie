@@ -28,58 +28,70 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Column(
             children: [
-              //serach bar
               SafeArea(
-                  child: Container(
-                    //Search Container
+                child: Container(
+                  //Search Wala Container
 
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    margin:  const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(24)),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            if ((searchController.text).replaceAll(" ", "") ==
-                                "") {
-                              print("Blank search");
-                            } else {
-                             //Navigator.push(context, MaterialPageRoute(builder: (context) => Search(searchController.text)));
-                            }
-                          },
-                          child: Container(
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.blueAccent,
-                            ),
-                            margin:const EdgeInsets.fromLTRB(3, 0, 7, 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24)),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          if ((searchController.text).replaceAll(" ", "") ==
+                              "") {
+                            print("Blank search");
+                          } else {
+                            Navigator.pushReplacementNamed(context, "/loading",
+                                arguments: {
+                                  "searchText": searchController.text,
+                                });
+                          }
+                        },
+                        child: Container(
+                          child: Icon(
+                            Icons.search,
+                            color: Colors.blueAccent,
                           ),
+                          margin: EdgeInsets.fromLTRB(3, 0, 7, 0),
                         ),
-                        Expanded(
-                          child: TextField(
-                            controller: searchController,
-                            decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Let's Cook Something!"),
-                          ),
-                        )
-                      ],
-                    ),
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: searchController,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Lets Cook Somethings"),
+                        ),
+                      )
+                    ],
                   ),
+                ),
               ),
-
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: const [
+                    Text(
+                      "What do you want to cook?",
+                      style: TextStyle(fontSize: 33, color: Colors.white),
+                    ),
+                    SizedBox(height: 10),
+                    Text("Lets Cook!",
+                        style: TextStyle(fontSize: 20, color: Colors.white)),
+                  ],
+                ),
+              ),
             ],
           ),
-          SafeArea(
-            child: Text(
-              'Hi I am Home Screen',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
+          
         ],
       ),
     );
+    
   }
 }
