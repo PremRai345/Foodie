@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,6 +11,22 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
+
+  getRecipe(String query) async {
+    String url =
+        "https://api.edamam.com/search?q=$query&app_id=d1b38b35&app_key=47593eddf2b911e5e1041812ee4475b8";
+    Response response = await get(Uri.parse(url));
+    Map data = jsonDecode(response.body);
+    print(data);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getRecipe("Ladoo");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,10 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               "") {
                             print("Blank search");
                           } else {
-                            Navigator.pushReplacementNamed(context, "/loading",
-                                arguments: {
-                                  "searchText": searchController.text,
-                                });
+                            getRecipe(searchController.text); 
+                                
                           }
                         },
                         child: Container(
@@ -88,10 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          
         ],
       ),
     );
-    
   }
 }
