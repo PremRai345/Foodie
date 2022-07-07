@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:foodie/model.dart';
 import 'package:http/http.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<RecipeModel> recipeList = <RecipeModel>[];
   TextEditingController searchController = TextEditingController();
 
   getRecipe(String query) async {
@@ -17,7 +20,19 @@ class _HomeScreenState extends State<HomeScreen> {
         "https://api.edamam.com/search?q=$query&app_id=d1b38b35&app_key=47593eddf2b911e5e1041812ee4475b8";
     Response response = await get(Uri.parse(url));
     Map data = jsonDecode(response.body);
-    print(data);
+    log(data.toString());
+
+    data["hits"].forEach((element) {
+      RecipeModel recipeModel = new RecipeModel();
+      recipeModel = RecipeModel.fromMap(element["recipe"]);
+      recipeList.add(recipeModel);
+
+      log(recipeList.toString());
+    });
+    recipeList.forEach((Recipe) {
+      print(Recipe.applabel);
+      print(Recipe.appcalories);
+    });
   }
 
   @override
@@ -64,8 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               "") {
                             print("Blank search");
                           } else {
-                            getRecipe(searchController.text); 
-                                
+                            getRecipe(searchController.text);
                           }
                         },
                         child: Container(
