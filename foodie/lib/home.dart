@@ -121,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: 10,
+                      itemCount: 100,
                       itemBuilder: (context, index) {
                         return PremText();
                       }),
