@@ -14,6 +14,28 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<RecipeModel> recipeList = <RecipeModel>[];
   TextEditingController searchController = TextEditingController();
+  List recipCatList = [
+    {
+      'imgUrl':
+          'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+      'heading': 'special',
+    },
+    {
+      'imgUrl':
+          'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+      'heading': 'chicken',
+    },
+    {
+      'imgUrl':
+          'https://images.unsplash.com/photo-1626776877184-84cadaef8d09?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1208&q=80',
+      'heading': 'momo',
+    },
+    {
+      'imgUrl':
+          'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=999&q=80',
+      'heading': 'burger',
+    }
+  ];
 
   getRecipe(String query) async {
     String url =
@@ -111,10 +133,66 @@ class _HomeScreenState extends State<HomeScreen> {
                         "What do you want to cook?",
                         style: TextStyle(fontSize: 33, color: Colors.white),
                       ),
-                      SizedBox(height: 10),
-                      Text("Lets Cook!",
-                          style: TextStyle(fontSize: 20, color: Colors.white)),
                     ],
+                  ),
+                ),
+                Container(
+                  height: 100,
+                  child: ListView.builder(
+                    itemCount: recipCatList.length,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        child: InkWell(
+                          onTap: () {},
+                          child: Card(
+                              margin: const EdgeInsets.all(20),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              elevation: 0.0,
+                              child: Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(18),
+                                    child: Image.network(
+                                      recipCatList[index]['imgUrl'],
+                                      fit: BoxFit.cover,
+                                      width: 200,
+                                      height: 250,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    top: 0,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5, horizontal: 10),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.black26,
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            recipCatList[index]['heading'],
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        ),
+                      );
+                    },
                   ),
                 ),
                 Container(
@@ -205,8 +283,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
-
-Widget PremText() {
-  return const Text("Prem is a Flutter developer");
 }
