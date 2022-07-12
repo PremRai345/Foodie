@@ -2,17 +2,17 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:foodie/model.dart';
-import 'package:foodie/search.dart';
 import 'package:http/http.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class Search extends StatefulWidget {
+  String query;
+  Search(this.query);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<Search> createState() => _SearchState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SearchState extends State<Search> {
   bool isLoadig = true;
   List<RecipeModel> recipeList = <RecipeModel>[];
   TextEditingController searchController = TextEditingController();
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getRecipe("Ladoo");
+    getRecipe(widget.query);
   }
 
   @override
@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 "") {
                               print("Blank search");
                             } else {
-                              Navigator.push(
+                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
@@ -127,76 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       ],
                     ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: const [
-                      Text(
-                        "What do you want to cook?",
-                        style: TextStyle(fontSize: 33, color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 100,
-                  child: ListView.builder(
-                    itemCount: recipCatList.length,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        child: InkWell(
-                          onTap: () {},
-                          child: Card(
-                              margin: const EdgeInsets.all(20),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                              elevation: 0.0,
-                              child: Stack(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(18),
-                                    child: Image.network(
-                                      recipCatList[index]['imgUrl'],
-                                      fit: BoxFit.cover,
-                                      width: 200,
-                                      height: 250,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    left: 0,
-                                    right: 0,
-                                    bottom: 0,
-                                    top: 0,
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 10),
-                                      decoration: const BoxDecoration(
-                                        color: Colors.black26,
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            recipCatList[index]['heading'],
-                                            style: const TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )),
-                        ),
-                      );
-                    },
                   ),
                 ),
                 Container(
