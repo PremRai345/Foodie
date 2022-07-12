@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:foodie/model.dart';
+import 'package:foodie/recipe_view.dart';
 import 'package:foodie/search.dart';
 import 'package:http/http.dart';
 
@@ -149,7 +150,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (context, index) {
                       return Container(
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        RecipeView(recipeList[index].appurl)));
+                          },
                           child: Card(
                               margin: const EdgeInsets.all(20),
                               shape: RoundedRectangleBorder(
@@ -208,7 +215,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemCount: recipeList.length,
                           itemBuilder: (context, index) {
                             return InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Search(recipCatList[index]['heading'])));
+                              },
                               child: Card(
                                 margin: const EdgeInsets.all(20),
                                 shape: RoundedRectangleBorder(
